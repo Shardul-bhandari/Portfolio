@@ -1,457 +1,572 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shardul Singh | SysAdmin & CloudOps Engineer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <title>Shardul Singh | IT Administrator</title>
+    <meta name="description" content="Shardul Singh — IT Administrator in New Delhi with about 3 years across Microsoft 365, Entra ID, Active Directory, endpoint security and L1/L2 support.">
+    <meta name="theme-color" content="#0b0f14">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #0b0f14;
+            --panel: #111821;
+            --panel-2: #16202b;
+            --line: #233041;
+            --text: #e6edf3;
+            --muted: #9aa8b6;
+            --accent: #4ade80;      /* terminal green: professional / live */
+            --accent-ink: #052e16;
+            --lab: #fbbf24;         /* amber: learning / in progress */
+            --link: #7dd3fc;
+            --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+            --sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --radius: 10px;
+            --wrap: 1120px;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 72px; }
         body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: #f8fafc;
-            color: #0f172a;
+            margin: 0;
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.6;
+            background: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
-            perspective: 1500px;
         }
-        ::selection { background: #0ea5e9; color: white; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
-        
-        /* 3D Glassmorphism - Light Mode */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255,255,255,0.5);
-            transform-style: preserve-3d;
-            transition: box-shadow 0.4s ease, border-color 0.4s ease;
-            height: 100%;
+        ::selection { background: var(--accent); color: var(--accent-ink); }
+        a { color: var(--link); }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+        h1, h2, h3 { line-height: 1.2; margin: 0; }
+        p { margin: 0; }
+        ul { margin: 0; padding: 0; }
+        .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 16px; }
+        @media (min-width: 640px) { .wrap { padding: 0 24px; } }
+        .mono { font-family: var(--mono); }
+        .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+        .skip-link {
+            position: absolute; left: 16px; top: -48px; z-index: 100;
+            background: var(--accent); color: var(--accent-ink);
+            padding: 8px 14px; border-radius: 6px; font-weight: 600; text-decoration: none;
         }
-        .glass-card:hover {
-            border-color: rgba(14, 165, 233, 0.4);
-            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.15), inset 0 0 0 1px rgba(255,255,255,0.8);
+        .skip-link:focus { top: 12px; }
+
+        /* Navigation */
+        .nav {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(11, 15, 20, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+        }
+        .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
+        .brand { font-family: var(--mono); font-weight: 700; color: var(--text); text-decoration: none; white-space: nowrap; }
+        .brand span { color: var(--accent); }
+        .nav-links { display: flex; gap: 4px; list-style: none; }
+        .nav-links a {
+            display: block; padding: 6px 10px; border-radius: 6px;
+            font-size: 14px; color: var(--muted); text-decoration: none;
+        }
+        .nav-links a:hover { color: var(--text); background: var(--panel-2); }
+        .nav-toggle {
+            display: none; background: none; border: 1px solid var(--line); color: var(--text);
+            font-family: var(--mono); font-size: 13px; padding: 6px 10px; border-radius: 6px; cursor: pointer;
+        }
+        @media (max-width: 820px) {
+            .nav-toggle { display: block; }
+            .nav-links {
+                display: none; position: absolute; top: 60px; left: 0; right: 0;
+                flex-direction: column; padding: 8px 16px 16px;
+                background: var(--bg); border-bottom: 1px solid var(--line);
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 10px 8px; font-size: 16px; }
         }
 
-        .tilt-inner {
-            transform: translateZ(40px) scale(0.98);
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 18px; border-radius: 8px; font-weight: 600; font-size: 15px;
+            text-decoration: none; border: 1px solid var(--line); color: var(--text);
+            background: var(--panel); transition: border-color .15s, background .15s, transform .15s;
         }
-        .tilt-inner-deep {
-            transform: translateZ(70px);
-        }
+        .btn:hover { border-color: var(--muted); transform: translateY(-1px); }
+        .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+        .btn-primary:hover { background: #86efac; border-color: #86efac; }
 
-        /* Pure CSS 3D Cube */
-        .cube-container {
-            width: 220px; height: 220px;
-            perspective: 1200px;
-            margin: auto;
+        /* Hero */
+        .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--line); }
+        .hero-grid { display: grid; gap: 40px; align-items: center; }
+        @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.25fr 1fr; gap: 56px; } .hero { padding: 104px 0 88px; } }
+        .eyebrow {
+            font-family: var(--mono); font-size: 13px; color: var(--accent);
+            display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px;
         }
-        .cube {
-            width: 100%; height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: rotateCube 16s infinite linear;
-        }
-        .cube-face {
-            position: absolute;
-            width: 220px; height: 220px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px; font-weight: 900; color: #0ea5e9;
-            background: rgba(255, 255, 255, 0.85);
-            border: 2px solid rgba(14, 165, 233, 0.4);
-            box-shadow: 0 0 40px rgba(14, 165, 233, 0.15);
-            backdrop-filter: blur(8px);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .face-front  { transform: rotateY(0deg) translateZ(110px); }
-        .face-right  { transform: rotateY(90deg) translateZ(110px); }
-        .face-back   { transform: rotateY(180deg) translateZ(110px); }
-        .face-left   { transform: rotateY(-90deg) translateZ(110px); }
-        .face-top    { transform: rotateX(90deg) translateZ(110px); }
-        .face-bottom { transform: rotateX(-90deg) translateZ(110px); }
-        @keyframes rotateCube {
-            from { transform: rotateX(0deg) rotateY(0deg); }
-            to { transform: rotateX(360deg) rotateY(360deg); }
-        }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(74, 222, 128, .18); }
+        .hero h1 { font-size: clamp(34px, 6vw, 56px); font-weight: 700; letter-spacing: -0.02em; }
+        .hero h1 .role { display: block; margin-top: 10px; font-size: clamp(18px, 2.6vw, 24px); font-weight: 500; color: var(--muted); letter-spacing: 0; }
+        .hero .lede { margin-top: 24px; font-size: 18px; color: #c4cfda; max-width: 56ch; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+        .meta { margin-top: 24px; font-family: var(--mono); font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
 
-        /* 3D Floating Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-        .float-anim { animation: float 5s ease-in-out infinite; }
-        
-        .timeline-line {
-            width: 4px;
-            background: linear-gradient(to bottom, #0ea5e9, #6366f1, transparent);
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 100%;
-            z-index: -1;
-            border-radius: 4px;
-        }
-        
-        /* Grid Alignment Fixes */
-        .flex-col-fill {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            height: 100%;
-        }
+        .terminal { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; font-family: var(--mono); font-size: 13.5px; }
+        .terminal-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--panel-2); color: var(--muted); font-size: 12px; }
+        .terminal-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: inline-block; }
+        .terminal-bar span { margin-left: 8px; }
+        .terminal pre { margin: 0; padding: 18px; white-space: pre-wrap; word-break: break-word; line-height: 1.75; color: #c4cfda; }
+        .t-prompt { color: var(--accent); }
+        .t-key { color: var(--link); }
+        .t-ok { color: var(--accent); }
+        .t-lab { color: var(--lab); }
 
+        /* Sections */
+        section.block { padding: 72px 0; border-bottom: 1px solid var(--line); }
+        @media (min-width: 900px) { section.block { padding: 96px 0; } }
+        .section-head { margin-bottom: 40px; max-width: 64ch; }
+        .section-head .kicker { font-family: var(--mono); font-size: 13px; color: var(--accent); margin-bottom: 10px; display: block; }
+        .section-head h2 { font-size: clamp(26px, 4vw, 36px); font-weight: 700; letter-spacing: -0.01em; }
+        .section-head p { margin-top: 12px; color: var(--muted); }
+
+        .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+
+        /* Impact */
+        .impact-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+        @media (min-width: 640px) { .impact-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1000px) { .impact-grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+        .impact .metric { font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--text); }
+        .impact h3 { font-size: 16px; font-weight: 600; margin-top: 10px; }
+        .impact p { color: var(--muted); font-size: 14.5px; margin-top: 6px; }
+        .impact.feature { border-color: rgba(74, 222, 128, .45); background: linear-gradient(180deg, rgba(74, 222, 128, .08), var(--panel) 70%); }
+        .impact.feature .metric { font-size: 48px; color: var(--accent); line-height: 1; }
+
+        /* Experience timeline */
+        .timeline { list-style: none; position: relative; display: grid; gap: 24px; }
+        .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+        .job { position: relative; padding-left: 36px; }
+        .job::before {
+            content: ""; position: absolute; left: 0; top: 28px; width: 16px; height: 16px; border-radius: 50%;
+            background: var(--bg); border: 2px solid var(--muted);
+        }
+        .job.current::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 4px rgba(74, 222, 128, .15); }
+        .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; align-items: baseline; }
+        .job h3 { font-size: 20px; font-weight: 600; }
+        .job .org { color: var(--muted); margin-top: 2px; }
+        .dates { font-family: var(--mono); font-size: 13px; color: var(--muted); white-space: nowrap; }
+        .job.current .dates { color: var(--accent); }
+        .job ul { margin-top: 16px; padding-left: 18px; display: grid; gap: 8px; color: #c4cfda; }
+        .job li::marker { color: var(--muted); }
+
+        /* Skills */
+        .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 24px; font-size: 14px; color: var(--muted); }
+        .legend span { display: inline-flex; align-items: center; gap: 8px; }
+        .swatch { width: 10px; height: 10px; border-radius: 2px; background: var(--accent); }
+        .swatch.lab { background: transparent; border: 1.5px dashed var(--lab); }
+        .skills-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+        @media (min-width: 700px) { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
+        .skill-card h3 { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .skill-card h3 .mono { font-size: 12px; color: var(--accent); font-weight: 400; }
+        .tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+        .tags li {
+            font-size: 14px; padding: 5px 10px; border-radius: 6px;
+            background: rgba(74, 222, 128, .08); border: 1px solid rgba(74, 222, 128, .3); color: var(--text);
+        }
+        .skill-card.lab { border-style: dashed; border-color: rgba(251, 191, 36, .45); }
+        @media (min-width: 700px) { .skill-card.lab { grid-column: 1 / -1; } }
+        .skill-card.lab h3 .mono { color: var(--lab); }
+        .skill-card.lab .tags li { background: transparent; border: 1px dashed rgba(251, 191, 36, .5); color: #f5deb3; }
+        .note { margin-top: 14px; font-size: 14px; color: var(--muted); }
+
+        /* Labs */
+        .labs-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+        @media (min-width: 700px) { .labs-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1000px) { .labs-grid { grid-template-columns: repeat(3, 1fr); } }
+        .lab-card { border-style: dashed; display: flex; flex-direction: column; gap: 10px; }
+        .badge {
+            align-self: flex-start; font-family: var(--mono); font-size: 12px; padding: 3px 8px; border-radius: 999px;
+            color: var(--lab); border: 1px solid rgba(251, 191, 36, .5);
+        }
+        .lab-card h3 { font-size: 17px; font-weight: 600; }
+        .lab-card p { color: var(--muted); font-size: 14.5px; }
+        .lab-card .stack { font-family: var(--mono); font-size: 12.5px; color: #c4cfda; margin-top: auto; padding-top: 8px; }
+
+        /* Education */
+        .edu-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+        @media (min-width: 700px) { .edu-grid { grid-template-columns: repeat(2, 1fr); } }
+        .edu h3 { font-size: 18px; font-weight: 600; margin-top: 8px; }
+        .edu p { color: var(--muted); margin-top: 4px; }
+
+        /* Contact */
+        .contact { display: grid; gap: 32px; align-items: start; }
+        @media (min-width: 900px) { .contact { grid-template-columns: 1.2fr 1fr; } }
+        .contact-list { list-style: none; display: grid; gap: 12px; }
+        .contact-list a {
+            display: flex; justify-content: space-between; align-items: center; gap: 12px;
+            padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--radius);
+            background: var(--panel); color: var(--text); text-decoration: none;
+            transition: border-color .15s;
+        }
+        .contact-list a:hover { border-color: var(--accent); }
+        .contact-list .label { font-family: var(--mono); font-size: 12px; color: var(--muted); display: block; }
+        .contact-list .value { font-weight: 500; word-break: break-all; }
+        .contact-list .arrow { color: var(--accent); font-family: var(--mono); flex-shrink: 0; }
+
+        footer { padding: 32px 0; color: var(--muted); font-size: 14px; }
+        footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+        /* Subtle reveal — only applied when JS runs and motion is allowed */
+        .js .reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+        .js .reveal.in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { transition: none !important; animation: none !important; }
+            .js .reveal { opacity: 1; transform: none; }
+        }
     </style>
 </head>
-<body class="antialiased selection:bg-sky-500 selection:text-white">
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- 3D Vanta Background Container -->
-    <div id="vanta-bg" class="fixed inset-0 w-full h-[120vh] z-[-2] pointer-events-none opacity-100 mask-image: linear-gradient(to bottom, black 70%, transparent 100%);"></div>
-
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            <span class="text-2xl font-black tracking-widest text-slate-900">SHARDUL<span class="text-sky-500">.</span></span>
-            <div class="hidden md:flex gap-8 text-[12px] font-bold uppercase tracking-[0.2em] text-slate-500">
-                <a href="#about" class="hover:text-sky-600 transition-all transform hover:scale-105">About</a>
-                <a href="#skills" class="hover:text-sky-600 transition-all transform hover:scale-105">Skills & DevOps</a>
-                <a href="#experience" class="hover:text-sky-600 transition-all transform hover:scale-105">Experience</a>
-                <a href="#education" class="hover:text-sky-600 transition-all transform hover:scale-105">Education</a>
-            </div>
+    <header class="nav">
+        <div class="wrap">
+            <a class="brand" href="#top" aria-label="Shardul Singh, back to top">shardul<span>@</span>infra:~$</a>
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">menu</button>
+            <nav aria-label="Primary">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#impact">Impact</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#labs">Labs</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="relative pt-40 pb-32 md:pt-48 md:pb-40 px-4 sm:px-6 overflow-hidden min-h-[90vh] flex items-center">
-        <div class="max-w-7xl mx-auto relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16 w-full">
-            <div class="hero-reveal text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
-                <div class="inline-block py-2 px-5 rounded-full bg-sky-50 text-sky-600 text-[10px] font-extrabold tracking-[0.3em] uppercase mb-8 border border-sky-100 shadow-sm float-anim">
-                    IT Administrator | CloudOps Trainee
-                </div>
-                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter leading-[1.05] text-slate-900" style="transform: translateZ(50px);">
-                    Architecting<br />
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-500">
-                        Modern Infra.
-                    </span>
-                </h1>
-                <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-10 font-light" style="transform: translateZ(30px);">
-                    Expert System Administrator with strong roots in Microsoft 365, Active Directory, and network security. Actively scaling my skill set into DevOps, AWS, and automation to build resilient cloud operations.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start perspective-1000">
-                    <a href="#skills" class="px-8 py-5 bg-sky-500 hover:bg-sky-600 text-white text-xs font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-[0_15px_30px_rgba(14,165,233,0.3)] transform hover:-translate-y-2 hover:translate-z-10">
-                        View DevOps Tech
-                    </a>
-                    <a href="mailto:shardulbhandari091@gmail.com" class="px-8 py-5 bg-white border border-slate-300 text-slate-800 text-xs font-bold uppercase tracking-[0.2em] rounded-xl hover:border-sky-500 hover:text-sky-600 transition-all transform hover:-translate-y-2 shadow-sm">
-                        Contact Me
-                    </a>
-                </div>
-            </div>
-            
-            <!-- 3D CSS Cube -->
-            <div class="hidden lg:block w-full max-w-[400px] relative mx-auto lg:mx-0 hero-reveal">
-                <div class="cube-container float-anim">
-                    <div class="cube">
-                        <div class="cube-face face-front">DevOps</div>
-                        <div class="cube-face face-back">Linux</div>
-                        <div class="cube-face face-right">Azure/AWS</div>
-                        <div class="cube-face face-left">SysAdmin</div>
-                        <div class="cube-face face-top">Docker</div>
-                        <div class="cube-face face-bottom">M365</div>
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero" id="top">
+            <div class="wrap hero-grid">
+                <div>
+                    <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>Open to IT, systems &amp; cloud support roles</p>
+                    <h1>Shardul Singh
+                        <span class="role">IT Administrator | Systems, Cloud &amp; Infrastructure Support</span>
+                    </h1>
+                    <p class="lede">
+                        I keep people productive and systems secure — managing Microsoft 365, Entra ID and Active Directory,
+                        hardening access with MFA, and resolving L1/L2 issues quickly. About 3 years across IT administration
+                        and software support, now building hands-on cloud and automation skills in personal labs.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#experience">View my experience</a>
+                        <a class="btn" href="Shardul_Singh_Resume.pdf" download>Download résumé <span class="sr-only">(PDF)</span></a>
+                        <a class="btn" href="#contact">Contact me</a>
                     </div>
+                    <p class="meta"><span>New Delhi, India</span><span>~3 yrs experience</span><span>BCA, Amity University (2024–2027)</span></p>
                 </div>
-                <div class="absolute -bottom-24 left-1/2 -translate-x-1/2 w-72 h-10 bg-black/10 blur-2xl rounded-full"></div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Key Achievements 3D Grid (Symmetrical 4-col) -->
-    <section id="about" class="py-24 px-4 sm:px-6 relative z-10 bg-white/40 border-y border-white/60">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 reveal-3d">
-                <h2 class="text-3xl md:text-5xl font-black tracking-tighter uppercase mb-4 text-slate-900">Key <span class="text-sky-500">Achievements</span></h2>
-            </div>
-            <!-- Perfectly symmetrical 4 column grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 perspective-1000">
-                <div data-tilt data-tilt-max="15" class="glass-card p-8 rounded-2xl text-center reveal-3d flex-col-fill justify-center">
-                    <div class="tilt-inner">
-                        <div class="text-4xl font-black text-sky-500 mb-2">30%</div>
-                        <p class="text-xs font-bold uppercase tracking-widest text-slate-600">Reduced Ticket<br>Resolution Time</p>
-                    </div>
-                </div>
-                <div data-tilt data-tilt-max="15" class="glass-card p-8 rounded-2xl text-center reveal-3d flex-col-fill justify-center">
-                    <div class="tilt-inner">
-                        <div class="text-4xl font-black text-sky-500 mb-2">Cloud</div>
-                        <p class="text-xs font-bold uppercase tracking-widest text-slate-600">Migrated Users to<br>Cloud Email</p>
-                    </div>
-                </div>
-                <div data-tilt data-tilt-max="15" class="glass-card p-8 rounded-2xl text-center reveal-3d flex-col-fill justify-center">
-                    <div class="tilt-inner">
-                        <div class="text-4xl font-black text-sky-500 mb-2">MFA</div>
-                        <p class="text-xs font-bold uppercase tracking-widest text-slate-600">Implemented For<br>Enterprise Security</p>
-                    </div>
-                </div>
-                <div data-tilt data-tilt-max="15" class="glass-card p-8 rounded-2xl text-center reveal-3d flex-col-fill justify-center">
-                    <div class="tilt-inner">
-                        <div class="text-4xl font-black text-sky-500 mb-2">100%</div>
-                        <p class="text-xs font-bold uppercase tracking-widest text-slate-600">Timely Onboarding &<br>Device Setup</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                <div class="terminal" aria-label="Profile summary">
+                    <div class="terminal-bar" aria-hidden="true"><i></i><i></i><i></i><span>~/profile</span></div>
+<pre><span class="t-prompt">$</span> whoami
+Shardul Singh — IT Administrator
 
-    <!-- Comprehensive Skills & DevOps Matrix (Symmetrical 2x2 Grid) -->
-    <section id="skills" class="py-32 px-4 sm:px-6 relative bg-gradient-to-b from-transparent to-white/30">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20 reveal-3d">
-                <h2 class="text-4xl sm:text-6xl font-black tracking-tighter uppercase mb-4 text-slate-900">Technology <span class="text-sky-500">Matrix</span></h2>
-                <p class="text-slate-600 text-lg font-light">Bridging traditional System Administration with modern DevOps & CloudOps.</p>
+<span class="t-prompt">$</span> cat role.txt
+<span class="t-key">current</span>   Timble Technologies (Nov 2025–now)
+<span class="t-key">previous</span>  Shaurya Software (Sep 2023–Nov 2025)
+
+<span class="t-prompt">$</span> ./impact --top
+<span class="t-ok">✓</span> Ticket resolution time  <span class="t-ok">-30%</span>
+<span class="t-ok">✓</span> Users migrated to cloud email
+<span class="t-ok">✓</span> MFA rolled out
+
+<span class="t-prompt">$</span> ls ~/labs
+<span class="t-lab">aws/  linux/  docker/  terraform/  (in progress)</span></pre>
+                </div>
             </div>
-            
-            <!-- Symmetrical 2x2 Grid for balanced layout -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 perspective-1000">
-                
-                <!-- Skill Group 1: System Admin -->
-                <div data-tilt data-tilt-max="5" class="glass-card p-10 rounded-[2rem] reveal-3d flex-col-fill">
-                    <div class="tilt-inner-deep h-full flex flex-col">
-                        <div class="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center mb-6 text-sky-600 shrink-0">
-                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m14-6h2m-2 6h2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-4 text-slate-900">System Administration</h3>
-                        <p class="text-sm text-slate-500 mb-6 font-light">Expert management of on-premise and hybrid OS environments.</p>
-                        <ul class="space-y-3 text-sm text-slate-700 font-medium mt-auto">
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></div>Windows Server & Linux Administration</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></div>Active Directory & Group Policy</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></div>PowerShell & Bash Scripting</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></div>Hardware/Software Provisioning</li>
+        </section>
+
+        <!-- Impact -->
+        <section class="block" id="impact" aria-labelledby="impact-title">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="kicker">// impact</span>
+                    <h2 id="impact-title">Results from the job</h2>
+                    <p>Outcomes from my professional roles — not lab work.</p>
+                </div>
+                <div class="impact-grid">
+                    <article class="card impact feature reveal">
+                        <div class="metric">30%</div>
+                        <h3>Faster ticket resolution</h3>
+                        <p>Reduced ticket resolution time by 30%.</p>
+                    </article>
+                    <article class="card impact reveal">
+                        <div class="metric">Cloud</div>
+                        <h3>Email migration</h3>
+                        <p>Migrated users to cloud email systems.</p>
+                    </article>
+                    <article class="card impact reveal">
+                        <div class="metric">MFA</div>
+                        <h3>Stronger access security</h3>
+                        <p>Implemented multi-factor authentication for user accounts.</p>
+                    </article>
+                    <article class="card impact reveal">
+                        <div class="metric">IAM</div>
+                        <h3>Onboarding &amp; offboarding</h3>
+                        <p>Set up and removed user accounts, licences, access and devices for joiners and leavers.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="block" id="experience" aria-labelledby="experience-title">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="kicker">// experience</span>
+                    <h2 id="experience-title">Professional experience</h2>
+                </div>
+                <ol class="timeline">
+                    <li class="job current reveal">
+                        <article class="card">
+                            <div class="job-head">
+                                <div>
+                                    <h3>IT Administrator</h3>
+                                    <p class="org">Timble Technologies Pvt. Ltd. (Timble Glance)</p>
+                                </div>
+                                <span class="dates">Nov 2025 – Present</span>
+                            </div>
+                            <ul>
+                                <li>Administer Microsoft 365 accounts, licences and permissions for employees.</li>
+                                <li>Create and manage user accounts and access in Active Directory and Microsoft Entra ID, including onboarding and offboarding.</li>
+                                <li>Install, configure and maintain desktops, laptops, printers and software across Windows and Linux.</li>
+                                <li>Resolve network, email and hardware issues as part of day-to-day L1/L2 support.</li>
+                                <li>Monitor endpoint security, antivirus and regular updates; manage backups and data recovery.</li>
+                                <li>Maintain IT asset inventory and documentation, and coordinate with vendors.</li>
+                            </ul>
+                        </article>
+                    </li>
+                    <li class="job reveal">
+                        <article class="card">
+                            <div class="job-head">
+                                <div>
+                                    <h3>Software Support Executive</h3>
+                                    <p class="org">Shaurya Software Pvt. Ltd.</p>
+                                </div>
+                                <span class="dates">Sep 2023 – Nov 2025</span>
+                            </div>
+                            <ul>
+                                <li>Maintained servers, workstations and network devices, including routine maintenance and performance monitoring to prevent downtime.</li>
+                                <li>Managed user accounts, permissions and access control.</li>
+                                <li>Provided L1/L2 support and performed software and hardware installations, configurations and updates.</li>
+                                <li>Protected business data by implementing backup and recovery processes.</li>
+                            </ul>
+                        </article>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="block" id="skills" aria-labelledby="skills-title">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="kicker">// skills</span>
+                    <h2 id="skills-title">Skills</h2>
+                </div>
+                <div class="legend reveal" aria-hidden="true">
+                    <span><i class="swatch"></i>Used professionally</span>
+                    <span><i class="swatch lab"></i>Learning in personal labs</span>
+                </div>
+                <div class="skills-grid">
+                    <div class="card skill-card reveal">
+                        <h3>Systems Administration <span class="mono">professional</span></h3>
+                        <ul class="tags">
+                            <li>Windows</li><li>Linux</li><li>Active Directory</li><li>Backups &amp; recovery</li><li>Software &amp; hardware setup</li><li>IT asset inventory</li>
                         </ul>
                     </div>
-                </div>
-
-                <!-- Skill Group 2: CloudOps -->
-                <div data-tilt data-tilt-max="5" class="glass-card p-10 rounded-[2rem] reveal-3d flex-col-fill">
-                    <div class="tilt-inner-deep h-full flex flex-col">
-                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-6 text-indigo-600 shrink-0">
-                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-4 text-slate-900">Cloud Operations</h3>
-                        <p class="text-sm text-slate-500 mb-6 font-light">Architecting identities, SaaS environments, and cloud infrastructure.</p>
-                        <ul class="space-y-3 text-sm text-slate-700 font-medium mt-auto">
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></div>Microsoft 365 & Exchange Admin</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></div>Microsoft Entra ID (Azure AD)</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></div>AWS Fundamentals & Cloud Security</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></div>Zero-Trust Architecture & MFA</li>
+                    <div class="card skill-card reveal">
+                        <h3>Microsoft 365 &amp; Identity <span class="mono">professional</span></h3>
+                        <ul class="tags">
+                            <li>Microsoft 365 admin</li><li>Microsoft Entra ID (Azure AD)</li><li>User accounts &amp; access control</li><li>MFA</li><li>Onboarding / offboarding</li><li>Cloud email migration</li>
                         </ul>
                     </div>
-                </div>
-
-                <!-- Skill Group 3: DevOps & Automation -->
-                <div data-tilt data-tilt-max="5" class="glass-card p-10 rounded-[2rem] reveal-3d flex-col-fill">
-                    <div class="tilt-inner-deep h-full flex flex-col">
-                        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 text-emerald-600 shrink-0">
-                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-4 text-slate-900">DevOps & Automation</h3>
-                        <p class="text-sm text-slate-500 mb-6 font-light">Bridging operations and development with scalable CI/CD pipelines.</p>
-                        <ul class="space-y-3 text-sm text-slate-700 font-medium mt-auto">
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></div>Docker Containerization Basics</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></div>CI/CD Concepts & Git Version Control</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></div>Task Automation via Scripting</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></div>Infrastructure as Code (Learning Terraform)</li>
+                    <div class="card skill-card reveal">
+                        <h3>Networking &amp; Security <span class="mono">professional</span></h3>
+                        <ul class="tags">
+                            <li>Network troubleshooting</li><li>Endpoint security</li><li>Antivirus &amp; patching</li><li>Hardware troubleshooting</li>
                         </ul>
                     </div>
-                </div>
-
-                <!-- Skill Group 4: Network & Security -->
-                <div data-tilt data-tilt-max="5" class="glass-card p-10 rounded-[2rem] reveal-3d flex-col-fill">
-                    <div class="tilt-inner-deep h-full flex flex-col">
-                        <div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center mb-6 text-rose-600 shrink-0">
-                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-4 text-slate-900">Network & Infra Security</h3>
-                        <p class="text-sm text-slate-500 mb-6 font-light">Maintaining highly secure and resilient data pathways.</p>
-                        <ul class="space-y-3 text-sm text-slate-700 font-medium mt-auto">
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></div>Firewall Configuration & Audits</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></div>Automated Data Backup & Recovery</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></div>Network Troubleshooting (TCP/IP, DNS)</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></div>Endpoint Antivirus Deployment</li>
+                    <div class="card skill-card reveal">
+                        <h3>Support Operations <span class="mono">professional</span></h3>
+                        <ul class="tags">
+                            <li>L1/L2 support</li><li>Ticket management</li><li>Documentation</li><li>Vendor coordination</li>
                         </ul>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3D Experience Timeline (Symmetrical Centered) -->
-    <section id="experience" class="py-32 px-4 sm:px-6 relative overflow-hidden bg-white/40 border-y border-white/60">
-        <div class="max-w-6xl mx-auto relative perspective-1000">
-            <div class="text-center mb-24 reveal-3d">
-                <h2 class="text-4xl sm:text-6xl font-black tracking-tighter uppercase mb-4 text-slate-900">Professional <span class="text-sky-500">Timeline</span></h2>
-                <div class="w-24 h-1 bg-sky-500 mx-auto rounded"></div>
-            </div>
-
-            <div class="relative pb-10">
-                <!-- Perfect Center Line -->
-                <div class="timeline-line hidden lg:block"></div>
-                
-                <!-- Timble Technologies -->
-                <div class="relative z-10 w-full flex flex-col lg:flex-row justify-between items-center mb-24 reveal-timeline group">
-                    <div class="w-full lg:w-[45%] text-left lg:text-right mb-6 lg:mb-0 transition-all duration-300 group-hover:-translate-x-2">
-                        <span class="inline-block px-4 py-1 bg-sky-500 text-white text-[10px] font-black tracking-[0.2em] uppercase rounded-full mb-3 shadow-lg">Nov 2025 – Present</span>
-                        <h3 class="text-3xl font-black text-slate-900 mb-1">IT Administrator</h3>
-                        <p class="text-sky-600 font-bold mb-4">Timble Technologies Pvt Ltd (Timble Glance)</p>
-                    </div>
-                    
-                    <div class="hidden lg:flex w-10 h-10 bg-white border-4 border-sky-500 rounded-full z-20 shadow-[0_0_15px_rgba(14,165,233,0.5)] transform transition-transform duration-300 group-hover:scale-125"></div>
-                    
-                    <div data-tilt data-tilt-max="5" class="w-full lg:w-[45%] glass-card p-6 md:p-8 rounded-[2rem] transition-all duration-300 group-hover:translate-x-2">
-                        <ul class="list-disc list-outside ml-4 text-sm text-slate-700 space-y-2 font-medium tilt-inner">
-                            <li>Managed day-to-day IT infrastructure and user support.</li>
-                            <li>Administered Microsoft 365 accounts, licenses, and permissions.</li>
-                            <li>Created and managed user accounts in Active Directory / Entra ID.</li>
-                            <li>Installed, configured, and maintained desktops, laptops, printers, and software.</li>
-                            <li>Resolved network, email, and hardware issues for employees.</li>
-                            <li>Monitored system security, antivirus, and regular updates.</li>
-                            <li>Managed backups and data recovery processes.</li>
+                    <div class="card skill-card lab reveal">
+                        <h3>Learning Labs <span class="mono">in progress</span></h3>
+                        <ul class="tags">
+                            <li>Linux CLI &amp; Bash</li><li>Python</li><li>PowerShell</li><li>AWS: IAM, EC2, S3, CloudWatch</li><li>Git &amp; GitHub</li><li>Docker</li><li>Networking fundamentals</li><li>GitHub Actions</li><li>Prometheus &amp; Grafana</li><li>Terraform</li><li>Ansible</li>
                         </ul>
+                        <p class="note">Self-directed practice in personal lab environments — not production experience.</p>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Shaurya Software -->
-                <div class="relative z-10 w-full flex flex-col lg:flex-row-reverse justify-between items-center reveal-timeline group">
-                    <div class="w-full lg:w-[45%] text-left mb-6 lg:mb-0 transition-all duration-300 group-hover:translate-x-2">
-                        <span class="inline-block px-4 py-1 bg-indigo-500 text-white text-[10px] font-black tracking-[0.2em] uppercase rounded-full mb-3 shadow-lg">Sep 2023 – Nov 2025</span>
-                        <h3 class="text-3xl font-black text-slate-900 mb-1">Software Support Executive</h3>
-                        <p class="text-indigo-600 font-bold mb-4">Shaurya Software Pvt. Ltd.</p>
-                    </div>
-                    
-                    <div class="hidden lg:flex w-10 h-10 bg-white border-4 border-indigo-500 rounded-full z-20 shadow-[0_0_15px_rgba(99,102,241,0.5)] transform transition-transform duration-300 group-hover:scale-125"></div>
-                    
-                    <div data-tilt data-tilt-max="5" class="w-full lg:w-[45%] glass-card p-6 md:p-8 rounded-[2rem] transition-all duration-300 group-hover:-translate-x-2">
-                        <ul class="list-disc list-outside ml-4 text-sm text-slate-700 space-y-2 font-medium tilt-inner">
-                            <li>Administered and maintained IT infrastructure, including servers, workstations, and network devices.</li>
-                            <li>Managed user accounts, permissions, and access control to ensure system security.</li>
-                            <li>Performed software and hardware installations, configurations, and updates.</li>
-                            <li>Conducted routine system maintenance and performance monitoring to prevent downtime.</li>
-                            <li>Assisted in troubleshooting and resolving technical issues related to IT systems and networks.</li>
-                            <li>Ensured data security by implementing backup and recovery solutions.</li>
-                        </ul>
-                    </div>
+        <!-- Labs -->
+        <section class="block" id="labs" aria-labelledby="labs-title">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="kicker">// labs</span>
+                    <h2 id="labs-title">Labs in progress</h2>
+                    <p>Personal, hands-on practice to grow from IT administration into cloud and infrastructure operations. These are learning projects, not work deployments.</p>
+                </div>
+                <div class="labs-grid">
+                    <article class="card lab-card reveal">
+                        <span class="badge">in progress</span>
+                        <h3>Linux &amp; Bash fundamentals</h3>
+                        <p>Practising the Linux command line, file permissions, users and groups, and small Bash scripts for routine tasks.</p>
+                        <p class="stack">Linux · Bash · Git</p>
+                    </article>
+                    <article class="card lab-card reveal">
+                        <span class="badge">in progress</span>
+                        <h3>AWS core services</h3>
+                        <p>Exploring IAM users and policies, EC2 instances, S3 storage and CloudWatch monitoring in a personal account.</p>
+                        <p class="stack">AWS IAM · EC2 · S3 · CloudWatch</p>
+                    </article>
+                    <article class="card lab-card reveal">
+                        <span class="badge">in progress</span>
+                        <h3>Admin scripting</h3>
+                        <p>Learning to automate repetitive admin tasks with PowerShell and Python.</p>
+                        <p class="stack">PowerShell · Python</p>
+                    </article>
+                    <article class="card lab-card reveal">
+                        <span class="badge">in progress</span>
+                        <h3>Containers &amp; CI</h3>
+                        <p>Building and running Docker containers and experimenting with GitHub Actions workflows.</p>
+                        <p class="stack">Docker · GitHub Actions</p>
+                    </article>
+                    <article class="card lab-card reveal">
+                        <span class="badge">in progress</span>
+                        <h3>Monitoring</h3>
+                        <p>Setting up Prometheus and Grafana to understand metrics, dashboards and alerting.</p>
+                        <p class="stack">Prometheus · Grafana</p>
+                    </article>
+                    <article class="card lab-card reveal">
+                        <span class="badge">in progress</span>
+                        <h3>Infrastructure as code</h3>
+                        <p>Learning Terraform and Ansible basics for repeatable infrastructure and configuration.</p>
+                        <p class="stack">Terraform · Ansible</p>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Education 3D Cards (Symmetrical 2-col) -->
-    <section id="education" class="py-32 px-4 sm:px-6 bg-slate-900 relative overflow-hidden border-y border-slate-800">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920')] bg-cover bg-center mix-blend-overlay"></div>
-        <div class="max-w-6xl mx-auto relative z-10">
-            <div class="text-center mb-20 reveal-3d">
-                <h2 class="text-4xl sm:text-6xl font-black tracking-tighter uppercase mb-4 text-white">Academic <span class="text-sky-400">Foundation</span></h2>
-            </div>
-            <!-- Perfectly symmetrical 2 column layout -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 perspective-1000">
-                <div data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.2" class="glass-card !bg-white/10 !border-white/20 p-10 rounded-[2rem] reveal-3d text-white shadow-2xl flex-col-fill">
-                    <div class="tilt-inner-deep h-full flex flex-col justify-center">
-                        <span class="text-sky-400 font-bold uppercase tracking-widest text-xs mb-3 block">2024 – 2027 (Pursuing)</span>
-                        <h3 class="text-3xl font-black mb-3 leading-tight">Bachelor of Computer Applications (BCA)</h3>
-                        <p class="text-slate-400 text-lg">Amity University, Haryana</p>
-                    </div>
+        <!-- Education -->
+        <section class="block" id="education" aria-labelledby="education-title">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="kicker">// education</span>
+                    <h2 id="education-title">Education</h2>
                 </div>
-                <div data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.2" class="glass-card !bg-white/10 !border-white/20 p-10 rounded-[2rem] reveal-3d text-white shadow-2xl flex-col-fill">
-                    <div class="tilt-inner-deep h-full flex flex-col justify-center">
-                        <span class="text-sky-400 font-bold uppercase tracking-widest text-xs mb-3 block">2020 – 2023</span>
-                        <h3 class="text-3xl font-black mb-3 leading-tight">Diploma in Information Technology (IT)</h3>
-                        <p class="text-slate-400 text-lg">Gov. Polytechnic Pithuwala, Dehradun</p>
-                    </div>
+                <div class="edu-grid">
+                    <article class="card edu reveal">
+                        <span class="dates">2024 – 2027 · Pursuing</span>
+                        <h3>Bachelor of Computer Applications (BCA)</h3>
+                        <p>Amity University, Haryana</p>
+                    </article>
+                    <article class="card edu reveal">
+                        <span class="dates">2020 – 2023</span>
+                        <h3>Diploma in Information Technology</h3>
+                        <p>Government Polytechnic Pithuwala, Dehradun</p>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="py-16 px-4 sm:px-6 border-t border-slate-200 bg-white relative z-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-            <div class="text-center md:text-left">
-                <span class="text-2xl font-black tracking-widest text-slate-900">SHARDUL<span class="text-sky-500">.</span></span>
-                <p class="text-slate-500 text-xs font-light mt-2">IT Administrator | CloudOps</p>
-            </div>
-            <div class="flex gap-12">
-                <div class="flex gap-6">
-                    <a href="https://www.linkedin.com/in/shardul-bhandari/" target="_blank" class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-sky-600 transition-all">LinkedIn</a>
-                    <a href="mailto:shardulbhandari091@gmail.com" class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-sky-600 transition-all">shardulbhandari091@gmail.com</a>
+        <!-- Contact -->
+        <section class="block" id="contact" aria-labelledby="contact-title">
+            <div class="wrap contact">
+                <div class="section-head reveal">
+                    <span class="kicker">// contact</span>
+                    <h2 id="contact-title">Let's talk</h2>
+                    <p>I'm looking for IT Administrator, Systems Administrator, Cloud Support and junior infrastructure or cloud operations roles. Email is the fastest way to reach me.</p>
                 </div>
+                <ul class="contact-list reveal">
+                    <li>
+                        <a href="mailto:shardulbhandari091@gmail.com">
+                            <span><span class="label">email</span><span class="value">shardulbhandari091@gmail.com</span></span>
+                            <span class="arrow" aria-hidden="true">→</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/shardul-bhandari/" target="_blank" rel="noopener noreferrer">
+                            <span><span class="label">linkedin</span><span class="value">Shardul Singh on LinkedIn</span></span>
+                            <span class="arrow" aria-hidden="true">↗<span class="sr-only"> (opens in a new tab)</span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Shardul_Singh_Resume.pdf" download>
+                            <span><span class="label">résumé</span><span class="value">Download résumé (PDF)</span></span>
+                            <span class="arrow" aria-hidden="true">↓</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <span>© <span id="year">2026</span> Shardul Singh</span>
+            <span class="mono">New Delhi, India</span>
         </div>
     </footer>
 
     <script>
-        // Init Vanta 3D Background - Light Mode with precise dots
-        VANTA.NET({
-            el: "#vanta-bg",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x0ea5e9,
-            backgroundColor: 0xf8fafc,
-            points: 15.00,
-            maxDistance: 22.00,
-            spacing: 16.00,
-            showDots: true
+        document.documentElement.classList.add('js');
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile menu
+        const toggle = document.querySelector('.nav-toggle');
+        const links = document.getElementById('nav-links');
+        toggle.addEventListener('click', () => {
+            const open = links.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', open);
+            toggle.textContent = open ? 'close' : 'menu';
+        });
+        links.addEventListener('click', e => {
+            if (e.target.closest('a')) {
+                links.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.textContent = 'menu';
+            }
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && links.classList.contains('open')) {
+                links.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.textContent = 'menu';
+                toggle.focus();
+            }
         });
 
-        gsap.registerPlugin(ScrollTrigger);
-
-        // 3D Hero Animations
-        gsap.from(".hero-reveal > *", {
-            z: -100,
-            y: 50,
-            opacity: 0,
-            rotationX: 35,
-            transformOrigin: "bottom center",
-            duration: 1.5,
-            stagger: 0.15,
-            ease: "expo.out",
-            delay: 0.2
-        });
-        
-        // 3D Standard Reveals
-        document.querySelectorAll('.reveal-3d').forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: { trigger: el, start: "top 85%" },
-                z: -50,
-                y: 60,
-                opacity: 0,
-                rotationX: 25,
-                duration: 1.2,
-                ease: "power3.out"
-            });
-        });
-
-        // 3D Timeline Reveals (Symmetrical Swings)
-        document.querySelectorAll('.reveal-timeline').forEach((el, index) => {
-            gsap.from(el, {
-                scrollTrigger: { trigger: el, start: "top 80%" },
-                x: index % 2 === 0 ? -100 : 100,
-                z: -100,
-                opacity: 0,
-                rotationY: index % 2 === 0 ? 25 : -25,
-                duration: 1.5,
-                ease: "expo.out"
-            });
-        });
+        // Subtle reveal on scroll
+        const items = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+                });
+            }, { rootMargin: '0px 0px -8% 0px' });
+            items.forEach(el => io.observe(el));
+        } else {
+            items.forEach(el => el.classList.add('in'));
+        }
     </script>
 </body>
 </html>
